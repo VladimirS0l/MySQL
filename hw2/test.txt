@@ -1,0 +1,43 @@
+USE vk;
+
+INSERT INTO users (firstname, lastname, email, password_hash, phone)
+VALUES 
+("Vladimir", "Solarev", "test@ya.ru", "123456", 123456);
+
+DROP TABLE IF EXISTS address;
+CREATE TABLE address(
+	address_id SERIAL,
+	user_addr_id BIGINT AUTO_INCREMENT,
+	index_city INT UNSIGNED NOT NULL,
+	city VARCHAR(30),
+	street VARCHAR(60),
+	building VARCHAR(10),
+	apartament VARCHAR(5),
+	
+	INDEX user_city (index_city, city),
+	FOREIGN KEY (user_addr_id) REFERENCES users(id)
+);
+
+DROP TABLE IF EXISTS vk_pay;
+CREATE TABLE vk_pay(
+	pay_id SERIAL,
+	card_number INT UNSIGNED NOT NULL,
+	card_holder VARCHAR(50),
+	date_card DATE,
+	
+	FOREIGN KEY (pay_id) REFERENCES users(id)
+);
+
+INSERT INTO address (user_addr_id, index_city, city, street, building, apartament)
+VALUES 
+(000100, "Moskow", "Tverskaya", "1A", "5"),
+(000300, "Saint-Petersburg", "Nevskiy p-t", "20D", "12"),
+(040000, "Tver", "Tverskaya", "15A", "9"),
+(102020, "Nizhniy Novgorod", "Komsomolskaya", "45", "75R"),
+(454545, "Ekaterinburg", "Malysheva", "150", "45"),
+(454177, "Perm", "Lenina", "84", "85"),
+(000100, "Moskow", "Kremlevskaya", "45", "75"),
+(000100, "Moskow", "Teatralniy", "49", "32"),
+(000100, "Moskow", "Bolotnaya", "96", "52"),
+(000100, "Moskow", "Moskvoretskaya", "2", "9"),
+(000100, "Moskow", "Kotelnicheskaya", "65", "78");
